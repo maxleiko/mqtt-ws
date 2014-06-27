@@ -157,11 +157,13 @@ function run(config) {
         });
 
         mqtt.on('message', function(topic, message, packet) {
-            if (mqtt.isWildcardTopic) {
-                ws.send(util.format("%s: %s", topic, message), self.options);
-            } else {
-                ws.send(message, self.options);
+            if (ws.readyState === 1) { // WebSocket.OPEN
+                if (mqtt.isWildcardTopic) {
+                    ws.send(util.format("%s: %s", topic, message), self.options);
+                } else {
+                    ws.send(message, self.options);
+                }
             }
         });
     });
-};
+}
