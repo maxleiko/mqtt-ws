@@ -13,7 +13,7 @@ var optimist = require('optimist'),
         'p': 'port',
         'h': 'host',
         'l': 'listen',
-        'c': 'configFile',
+        'c': 'configFile'
     })
     .describe({
         'p': 'MQTT port to connect to',
@@ -127,7 +127,7 @@ function run(config) {
         // Connect to the MQTT server using the URL query as options
         var mqtt = bridge.connectMqtt(parsed.query);
         mqtt.topic = decodeURIComponent(parsed.pathname.substring(1));
-        mqtt.isWildcardTopic = (mqtt.topic.match(/[\+#]/) != null);
+        mqtt.isWildcardTopic = (mqtt.topic.match(/[\+#]/) !== null);
 
         ws.on('close', function() {
             logger.info("WebSocket client %s closed", ws.connectString);
